@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+import rospy
+import time
+import geometry_msgs.msg
+from aauship_control.msg import *
+import tf
+
+
+rospy.init_node('range_proportional_control') #initialise so we can publish and subscribe
+
+listener = tf.TransformListener() #create a listener, not a subcriber
+pub = rospy.Publisher('lli_input', LLIinput, queue_size=1000) #LLI publisher for the thrust values
+
+pub_msg = LLIinput() #initialize the message container
+pub_msg.DevID = int(10)
+pub_msg.MsgID = int(5)
+
+time.sleep(1) #sleep to let transforms arrive before we start polling them
+
+#Desired (x,y,z). It is the position away from origo, which is the AR tag
+xdn =   
+ydn =
+zdn =
+
+while(1):
+	time.sleep(0.1)
+        (trans,rot) = listener.lookupTransform('/usb_cam', '/map', rospy.Time(0)) #get the transform between map and usb_cam
+	z = rot[2]
+	x = trans[0]
+	y = trans[1]
+
+	#Transformation matrix from b to n
+	Tn = np.array([cos(z), -sin(z), x; sin(z), cos(z), y; 0, 0, 1])
+
+	#Vector with the desired postions of the boat in NED frame
+	Pd = np.array([xdn; ydn; 1])
+	# The inverse of Tb (from n to b)
+	Tinv = np.linalg.inv(Tn)
+
+	#Vector with desired postions in boat frame
+	Tb = Tinv*Pd
+
+	#Output of the transformation matrix
+	xdb = Tb(0)
+
+	ydb = Tb(1)
+
+	zdb = zdn - z
+	
+	#Publish the vector containing the desired positions to the topic
+	pub_msg.Data = Th
+
+	pub.publish(pub_msg)

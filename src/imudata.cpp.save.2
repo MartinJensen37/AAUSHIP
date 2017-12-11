@@ -1,0 +1,28 @@
+#include <tf/transform_datatypes.h>
+#include "ros/ros.h"
+#include "aauship_control/ADIS16405.h"
+#include "sensor_msgs/Imu.h"
+
+int main(int argc, char **argv)
+{
+
+	ros::init(argc, argv, "imudata");
+	ros::NodeHandle n;
+	ros::Subscriber imu_update = n.subscribe("/imu",1000,imu_callback);
+	ros::Publisher imudata_pub = n.advertise<sensor_msgs::Imu_data>("/imu_data", 1);
+
+
+}
+
+void Quaternion(float q)
+{
+tf::Quaternion q = tf::createQuaternionFromRPY(0, 0, 0); 
+ROS_INFO_STREAM(q); 
+}
+while(ros::ok())
+{
+		//Publish the states
+		sensor_msgs::Imu_data imu_data_msg;
+		imu_data_pub.publish(imu_data_msg);
+}
+		
