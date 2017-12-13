@@ -41,7 +41,7 @@ while(1):
 	orientation = msg.markers[0].pose.pose.orientation
 	euler = tf.transformations.euler_from_quaternion([orientation.x, orientation.y, orientation.z, orientation.w])
 	yaw = euler[1]
-	x = position.z
+	x = position.z	#z position being the distance from the AR tag to the boat because alvar coords.
 	y = position.x
 
 	#Transformation matrix from b to n
