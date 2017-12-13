@@ -60,9 +60,9 @@ while (1):
 
 	
 	if (f1_force > 0):
-		f1_pwm = (f1_force * 6.6044 + 60)*stop
+		f1_pwm = (f1_force * 6.6044 + 60)*stop	#Changes control signal(0-10) to a PWM signal by multiplying with 6.6044, then compensates for motors with + 60
 	else: 
-		f1_pwm = (f1_force * 8.5 - 100)   *stop
+		f1_pwm = (f1_force * 8.5 - 100)   *stop	#Same as above but for reversing rear thruster 1.
 
         if (f2_force > 0):
                 f2_pwm = (f2_force * 6.6044 + 60)*stop
@@ -70,7 +70,7 @@ while (1):
                 f2_pwm = (f2_force * 8.5 - 100)   *stop
 
 
-	fbt_pwm = fbt_force * 100 * stop
+	fbt_pwm = fbt_force * 100 * stop	#sets bow thruster pwm to max since lacking model, max since they are weak
 	rbt_pwm = fbt_force * 100 * stop
 	
 
